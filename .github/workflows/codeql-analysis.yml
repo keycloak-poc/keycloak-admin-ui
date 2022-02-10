@@ -1,9 +1,5 @@
 name: "CodeQL"
 
-queries:
- - name: Security and Quality
-   uses: security-and-quality
-
 on:
   push:
     branches: [main]
@@ -35,6 +31,7 @@ jobs:
       uses: github/codeql-action/init@v1
       with:
         languages: ${{ matrix.language }}
+        queries: security-and-quality
 
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
