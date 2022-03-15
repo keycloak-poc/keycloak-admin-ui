@@ -1,0 +1,39 @@
+name: Semgrep
+
+on:
+# Disable for push and pull_request until https://github.com/keycloak/keycloak/issues/10203 is resolved
+  push:
+    branches: [main]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [main]
+  schedule:
+    - cron: '0 9 * * 2'
+
+jobs:
+  analyze:
+    name: Analyze
+
+    runs-on: ubuntu-latest
+
+    #continue-on-error: true # TODO: remove when semgrep fixed: https://github.com/returntocorp/semgrep-action/issues/429
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run Semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          generateSarif: "1"
+          config: >- # more at semgrep.dev/explore
+            p/security-audit
+            p/secrets
+            p/react
+        env:
+          SEMGREP_TIMEOUT: 300
+
+      - name: Upload SARIF file to GitHub Advanced Security Dashboard
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: semgrep.sarif
+        if: always()
