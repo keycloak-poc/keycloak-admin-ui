@@ -81,7 +81,7 @@
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "lint-staged": "^12.3.5",
-    "postcss": "^8.4.8",
+    "postcss": "^8.4.17",
     "postcss-import": "^14.0.2",
     "postcss-svg": "^3.0.0",
     "prettier": "^2.5.1",
